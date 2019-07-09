@@ -1,19 +1,14 @@
 'use strict';
 
 const path = require('path');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: {
-    index: './src/index.js',
-    search: './src/search.js',
-  },
+  entry: './src/search.js',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
   },
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       {
@@ -55,13 +50,5 @@ module.exports = {
         use: 'file-loader'
       }
     ]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new CleanWebpackPlugin()
-  ],
-  devServer: {
-    contentBase: './dist',
-    hot: true
   }
 }

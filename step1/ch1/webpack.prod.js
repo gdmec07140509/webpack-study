@@ -34,17 +34,7 @@ module.exports = {
         use: [
           MinCssExtractPlugin.loader,
           'css-loader',
-          'less-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [
-                require('autoprefixer')({
-                  overrideBrowserslist: ['last 2 version', '>1%', 'ios 7']
-                })
-              ]
-            }
-          }
+          'less-loader'
         ]
       },
       // {

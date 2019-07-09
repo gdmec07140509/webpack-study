@@ -4,7 +4,6 @@ const path = require('path');
 const MinCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -34,17 +33,7 @@ module.exports = {
         use: [
           MinCssExtractPlugin.loader,
           'css-loader',
-          'less-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [
-                require('autoprefixer')({
-                  overrideBrowserslist: ['last 2 version', '>1%', 'ios 7']
-                })
-              ]
-            }
-          }
+          'less-loader'
         ]
       },
       // {
@@ -110,7 +99,6 @@ module.exports = {
         minifyJS: true,
         removeComments: false
       }
-    }),
-    new CleanWebpackPlugin()
+    })
   ]
 }
