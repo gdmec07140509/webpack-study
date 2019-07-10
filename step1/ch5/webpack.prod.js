@@ -28,7 +28,7 @@ const setMPA = () => {
         new HtmlWebpackPlugin({
           template: path.join(__dirname, `src/${pageName}/index.html`),
           filename: `${pageName}.html`,
-          chunks: ['vendors', pageName, 'commons'],
+          chunks: [pageName],
           inject: true,
           minify: {
             html5: true,
@@ -57,7 +57,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: '[name]_[chunkhash:8].js',
   },
-  mode: 'production',
+  mode: 'none',
   module: {
     rules: [{
       test: /\.js$/,
@@ -128,44 +128,19 @@ module.exports = {
       cssProcessor: require('cssnano')
     }),
     new CleanWebpackPlugin(),
-    // new HtmlWebpackExternalsPlugin({
-    //   externals: [
-    //     {
-    //       module: 'react',
-    //       entry: 'http://11.url.cn/now/lib/16.2.0/react.min.js',
-    //       global: 'React'
-    //     },{
-    //       module: 'react-dom',
-    //       entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
-    //       global: 'ReactDOM'
-    //     },
-    //   ],
-    // })
+    new HtmlWebpackExternalsPlugin({
+      externals: [
+        {
+          module: 'react',
+          entry: 'http://11.url.cn/now/lib/16.2.0/react.min.js',
+          global: 'React'
+        },{
+          module: 'react-dom',
+          entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
+          global: 'ReactDOM'
+        },
+      ],
+    })
   ].concat(htmlWebpackPlugin),
-  // 把react react-dom提取出来
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       commons: {
-  //         test: /(react|react-dom)/,
-  //         name: 'vendors',
-  //         chunks: 'all'
-  //       }
-  //     }
-  //   }
-  // },
-  // 提取公共文件
-  optimization: {
-    splitChunks: {
-      minSize: 0,
-      cacheGroups: {
-        commons: {
-          name: 'commons',
-          chunks: 'all',
-          minChunks: 2
-        }
-      }
-    }
-  }
-  // devtool:'inline-source-map'
+  devtool:'inline-source-map'
 }

@@ -31,3 +31,7 @@ step1 第二阶段
   ch3 多页应用通用打包方案 ！！！
 
   ch4 使用source map
+
+  ch5 html-web-extract方式CDN化
+
+  ch6 webpack4内置的 split-chunks-plugin 分离
