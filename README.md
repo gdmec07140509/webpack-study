@@ -35,3 +35,5 @@ step1 第二阶段
   ch5 html-web-extract方式CDN化
 
   ch6 webpack4内置的 split-chunks-plugin 分离
+
+  ch7 tree-shaking
