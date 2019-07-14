@@ -37,3 +37,7 @@ step1 第二阶段
   ch6 webpack4内置的 split-chunks-plugin 分离
 
   ch7 tree-shaking
+
+  ch8 代码分割和动态import
+
+  ch9 eslint
