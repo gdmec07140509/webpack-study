@@ -35,7 +35,7 @@ class Search extends React.Component {
     const { Text } = this.state;
     const funcA = a();
     return <div className="search-text">
-      Search Text { funcA }
+      Search Text { funcA } we11
       {
         Text ? <Text /> : null
       }

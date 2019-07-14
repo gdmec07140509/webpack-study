@@ -8,6 +8,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const FriendlyErrorWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const setMPA = () => {
   const entry = {};
@@ -144,7 +145,8 @@ module.exports = {
     //     },
     //   ],
     // }),
-    new webpack.optimize.ModuleConcatenationPlugin()
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new FriendlyErrorWebpackPlugin()
   ].concat(htmlWebpackPlugin),
   // 把react react-dom提取出来
   // optimization: {
@@ -170,6 +172,6 @@ module.exports = {
         }
       }
     }
-  }
-  // devtool:'inline-source-map'
+  },
+  stats: 'errors-only'
 }
