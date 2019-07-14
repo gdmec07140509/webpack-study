@@ -1,14 +1,18 @@
 'use strict';
 
-// import React from 'react';
-// import logo from './images/1.png';
-// import './search.less';
-// import '../../common'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const React = require('react');
-const logo = require('./images/1.png');
-require('./search.less');
-require('../../common');
+import logo from './images/1.png';
+
+import './search.less';
+import '../../common'
+
+import { a, b } from './tree-shaking'
+
+if (false) {
+  b();
+}
 
 class Search extends React.Component {
   constructor() {
@@ -29,8 +33,9 @@ class Search extends React.Component {
 
   render() {
     const { Text } = this.state;
+    const funcA = a();
     return <div className="search-text">
-      123adasd
+      Search Text { funcA }
       {
         Text ? <Text /> : null
       }
@@ -39,4 +44,7 @@ class Search extends React.Component {
   }
 }
 
-module.exports = <Search />;
+ReactDOM.render(
+  <Search />,
+  document.getElementById('root')
+)
