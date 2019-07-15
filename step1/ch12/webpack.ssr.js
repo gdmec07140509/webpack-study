@@ -8,42 +8,42 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
-const FriendlyErrorWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const setMPA = () => {
   const entry = {};
   const htmlWebpackPlugin = [];
 
-  const entryFiles = glob.sync(path.join(__dirname, './src/*/index.js'))
+  const entryFiles = glob.sync(path.join(__dirname, './src/*/index-server.js'))
 
   Object.keys(entryFiles)
     .map((index) => {
       const entryFile = entryFiles[index];
 
       // C:/Users/82198/Desktop/webpack/webpack-01/src/search/index.js
-      const match = entryFile.match(/src\/(.*)\/index\.js/)
+      const match = entryFile.match(/src\/(.*)\/index-server\.js/)
       const pageName = match && match[1];
       // console.log('pageName', pageName)
 
-      entry[pageName] = entryFile;
-      htmlWebpackPlugin.push(
-        new HtmlWebpackPlugin({
-          template: path.join(__dirname, `src/${pageName}/index.html`),
-          filename: `${pageName}.html`,
-          chunks: ['vendors', pageName, 'commons'],
-          inject: true,
-          minify: {
-            html5: true,
-            collapseWhitespace: true,
-            preserveLineBreaks: false,
-            minifyCSS: true,
-            minifyJS: true,
-            removeComments: false
-          }
-        }),
-      )
+      if (pageName) {
+        entry[pageName] = entryFile;
+        htmlWebpackPlugin.push(
+          new HtmlWebpackPlugin({
+            template: path.join(__dirname, `src/${pageName}/index.html`),
+            filename: `${pageName}.html`,
+            chunks: ['vendors', pageName, 'commons'],
+            inject: true,
+            minify: {
+              html5: true,
+              collapseWhitespace: true,
+              preserveLineBreaks: false,
+              minifyCSS: true,
+              minifyJS: true,
+              removeComments: false
+            }
+          }),
+        )
+      }
     })
-  console.log('entryFiles', entryFiles)
 
   return {
     entry,
@@ -57,9 +57,10 @@ module.exports = {
   entry: entry,
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name]_[chunkhash:8].js',
+    filename: '[name]-server.js',
+    libraryTarget: 'umd'
   },
-  mode: 'none',
+  mode: 'production',
   module: {
     rules: [{
       test: /\.js$/,
@@ -145,18 +146,7 @@ module.exports = {
     //     },
     //   ],
     // }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new FriendlyErrorWebpackPlugin(),
-    function () {
-      this.hooks.done.tap('done', (stats) => {
-        if (stats.compilation.errors
-          && stats.compilation.errors.length
-          && process.argv.indexOf('--watch') == -1) {
-          console.log('build error');
-          process.exit(1);
-        }
-      })
-    }
+    new webpack.optimize.ModuleConcatenationPlugin()
   ].concat(htmlWebpackPlugin),
   // 把react react-dom提取出来
   // optimization: {
@@ -182,6 +172,6 @@ module.exports = {
         }
       }
     }
-  },
-  stats: 'errors-only'
+  }
+  // devtool:'inline-source-map'
 }
