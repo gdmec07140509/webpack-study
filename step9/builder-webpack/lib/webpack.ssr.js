@@ -1,25 +1,26 @@
-const merge = require('webpack-merge')
-const baseConfig = require('./webpack.base')
+const merge = require('webpack-merge');
 
+const cssnano = require('cssnano');
 const glob = require('glob');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const baseConfig = require('./webpack.base');
 
 const setMPA = () => {
-  const entry = {}
-  const htmlWebpackPlugins = []
+  const entry = {};
+  const htmlWebpackPlugins = [];
 
-  const entryFiles = glob.sync(path.join(__dirname, '../src/*/index-server.js'))
+  const entryFiles = glob.sync(path.join(__dirname, '../src/*/index-server.js'));
 
-  Object.keys(entryFiles).map(index => {
-    const entryFile = entryFiles[index]
-    const match = entryFile.match(/src\/(.*)\/index-server\.js/)
-    const pageName = match && match[1]
+  Object.keys(entryFiles).map((index) => {
+    const entryFile = entryFiles[index];
+    const match = entryFile.match(/src\/(.*)\/index-server\.js/);
+    const pageName = match && match[1];
 
-    entry[pageName] = entryFile
-    htmlWebpackPlugins.push(
+    entry[pageName] = entryFile;
+    return htmlWebpackPlugins.push(
       new HtmlWebpackPlugin({
         template: path.join(__dirname, `../src/${pageName}/index.html`),
         filename: `${pageName}.html`,
@@ -31,47 +32,47 @@ const setMPA = () => {
           preserveLineBreaks: false,
           minifyCSS: true,
           minifyJS: true,
-          removeComments: false
-        }
-      })
-    )
-  })
+          removeComments: false,
+        },
+      }),
+    );
+  });
 
   return {
     entry,
-    htmlWebpackPlugins
-  }
-}
+    htmlWebpackPlugins,
+  };
+};
 
-const { entry, htmlWebpackPlugins } = setMPA()
+const { entry, htmlWebpackPlugins } = setMPA();
 
 const ssrConfig = {
-  entry: entry,
+  entry,
   output: {
     path: path.join(__dirname, '../dist'),
     filename: '[name]-server.js',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
   },
   mode: 'production',
   plugins: [
     new OptimizeCSSAssetsPlugin({
       assetNameRegExp: /\.css$/g,
-      cssProcessor: require('cssnano')
+      cssProcessor: cssnano,
     }),
     new HtmlWebpackExternalsPlugin({
       externals: [
         {
           module: 'react',
           entry: 'http://11.url.cn/now/lib/16.2.0/react.min.js',
-          global: 'React'
+          global: 'React',
         },
         {
           module: 'react-dom',
           entry: 'https://11.url.cn/now/lib/16.2.0/react-dom.min.js',
-          global: 'ReactDOM'
-        }
-      ]
-    })
+          global: 'ReactDOM',
+        },
+      ],
+    }),
   ].concat(htmlWebpackPlugins),
   optimization: {
     splitChunks: {
@@ -80,11 +81,11 @@ const ssrConfig = {
         commons: {
           name: 'commons',
           chunks: 'all',
-          minChunks: 2
-        }
-      }
-    }
-  }
-}
+          minChunks: 2,
+        },
+      },
+    },
+  },
+};
 
-module.exports = merge(baseConfig, ssrConfig)
+module.exports = merge(baseConfig, ssrConfig);

@@ -1,8 +1,8 @@
-const merge = require('webpack-merge')
-const baseConfig = require('./webpack.base')
+const merge = require('webpack-merge');
 const path = require('path');
 
-const webpack = require('webpack')
+const webpack = require('webpack');
+const baseConfig = require('./webpack.base');
 
 const devConfig = {
   output: {
@@ -14,9 +14,9 @@ const devConfig = {
   devServer: {
     contentBase: '../dist',
     hot: true,
-    stats: 'errors-only'
+    stats: 'errors-only',
   },
-  devtool: 'source-map'
-}
+  devtool: 'source-map',
+};
 
-module.exports = merge(baseConfig, devConfig)
+module.exports = merge(baseConfig, devConfig);
