@@ -48,6 +48,12 @@ step1 第二阶段
 
   ch12 构建时的日志 和 错误中断
 
+step2 第三阶段
+
+  ch1 冒烟测试
+
+  ch2 单元测试
+
 step9 实战
 
   builder-webpack 第一阶段 整体架构总和
