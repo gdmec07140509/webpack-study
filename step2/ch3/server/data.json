@@ -1,0 +1,36 @@
+{
+  "error": [],
+  "extra": [],
+  "data": {
+    "list": [
+      [
+        {
+          "sub_count": 343,
+          "column_type": 1,
+          "id": 201,
+          "column_price_market": 1990,
+          "column_bgcolor": "#F6F7FB",
+          "column_title": "编辑训练营",
+          "column_cover_small": "https://static001.geekbang.org/resource/image/97/93/975998e5e5c1f957dc6279800854d393.jpg",
+          "column_cover": "https://static001.geekbang.org/resource/image/33/6d/3371e5858d6f98ad62a7388fccbb926d.jpg",
+          "had_sub": false,
+          "price_type": 1,
+          "column_unit": "6讲",
+          "is_experience": false,
+          "column_ctime": 1561636231,
+          "update_frequency": "全集",
+          "is_onboard": true,
+          "author_intro": "极客邦科技总编室",
+          "column_price_sale": 1990,
+          "column_sku": 100031101,
+          "column_cover_wxlite": "https://static001.geekbang.org/resource/image/2d/c2/2d0f4b5eafca51db0b4ce80fc65c4dc2.jpg",
+          "column_price": 1990,
+          "is_channel": false,
+          "author_name": "总编室",
+          "column_subtitle": "把内容交付这件事做好"
+        }
+      ]
+    ]
+  },
+  "code": 0
+}
